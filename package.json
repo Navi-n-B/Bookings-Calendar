@@ -1,0 +1,41 @@
+{
+  "name": "bookings-calendar",
+  "version": "1.0.0",
+  "description": "Components and server for bookings and calendar modules",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -d --watch",
+    "db:setup": "node server/database/seeding.js",
+    "test": "jest"
+  },
+  "author": "Jake",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "jest": "^25.1.0",
+    "sequelize-mock": "^0.10.2",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "@babel/core": "^7.8.7",
+    "babel": "^6.23.0",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.0.6",
+    "bluebird": "^3.7.2",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "mariadb": "^2.2.0",
+    "moment": "^2.24.0",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-test-renderer": "^16.13.0",
+    "sass": "^1.26.3",
+    "sequelize": "^5.21.5",
+    "underscore": "^1.9.2",
+    "webpack": "^4.42.0"
+  }
+}

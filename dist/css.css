@@ -1,0 +1,22 @@
+.cal-month {
+  padding: 8px;
+}
+
+.cal-tableheader-next {
+  float: right;
+}
+
+.cal-tableheader-prev {
+  float: left;
+}
+
+.cal-day {
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  color: rgb(72, 72, 72);
+  border: 1px solid rgb(237, 246, 246);
+  border-radius: 5px;
+  background-color: rgb(237, 246, 246);
+}
