@@ -7,7 +7,7 @@
 // set all of your requirements
 const Promise = require('bluebird');
 var SequelizeMock = require('sequelize-mock');
-const db = require('./database/index').Reservations;
+const db = require('../server/database/index').Reservations;
 
 
 // Connecting to the fake database
