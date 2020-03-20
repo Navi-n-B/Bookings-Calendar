@@ -8,7 +8,7 @@
     "db:setup": "node server/database/seeding.js",
     "test": "jest"
   },
-  "author": "Jake",
+  "author": "Jake Dunnicliff",
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.8.7",
@@ -31,8 +31,10 @@
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.2",
     "react": "^16.13.0",
+    "react-data-grid": "^7.0.0-alpha.29",
     "react-dom": "^16.13.0",
     "react-test-renderer": "^16.13.0",
+    "react-virtualized": "^9.21.2",
     "sass": "^1.26.3",
     "sequelize": "^5.21.5",
     "underscore": "^1.9.2",
