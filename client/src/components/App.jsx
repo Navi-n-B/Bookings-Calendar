@@ -44,7 +44,6 @@ class App extends React.Component {
       <div>
         <Calendar reservations={this.state.reservations}/>
         <Bookings />
-        <button onClick={this.getRoomData.bind(this)}>TEST</button>
       </div>
     )
   }

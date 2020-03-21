@@ -29,15 +29,15 @@ var getStayDates = function (INPUT) {
   return ReservationMock.findAll({
     attributes: ['start_date', 'end_date'],
     where: {
-      user_id: INPUT
+      listings_id: INPUT
     },
     raw: true
   })
 };
 
-describe('gets the reservations for the inputted user', function() {
-  it('gets the reservations for the inputted user', function (done) {
-    getStayDates(483753).then((data) => {
+describe('gets the reservations for the inputted listing', function() {
+  it('gets the reservations for the inputted listing', function (done) {
+    getStayDates(45673).then((data) => {
       expect(data[0].start_date).toBe('2020-09-16');
       expect(data[0].end_date).toBe('2020-09-23');
 
@@ -45,3 +45,5 @@ describe('gets the reservations for the inputted user', function() {
     }).catch(done);
   })
 });
+
+
