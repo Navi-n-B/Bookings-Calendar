@@ -24,21 +24,22 @@ var ReservationMock = dbMock.define('reservations_mock', {
 });
 
 
-// Sample function
+
 var getStayDates = function (INPUT) {
-  return ReservationMock.findAll({where: {user_id: INPUT}}).then(function (DATA) {
-    return DATA;
-  }).catch(() => {
-    console.log('your queries suck')
+  return ReservationMock.findAll({
+    attributes: ['start_date', 'end_date'],
+    where: {
+      user_id: INPUT
+    },
+    raw: true
   })
 };
 
-//Sample test
 describe('gets the reservations for the inputted user', function() {
   it('gets the reservations for the inputted user', function (done) {
-    getStayDates(483753).then(function (data) {
-      expect(data['start_date']).toBe('2020-09-16');
-      expect(data.end_date).toBe('2020-09-23');
+    getStayDates(483753).then((data) => {
+      expect(data[0].start_date).toBe('2020-09-16');
+      expect(data[0].end_date).toBe('2020-09-23');
 
       done();
     }).catch(done);

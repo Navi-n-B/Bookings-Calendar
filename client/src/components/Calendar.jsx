@@ -23,6 +23,25 @@ class Calendar extends React.Component {
   }
 
 
+  componenetDidMount() {
+    this.initializeDates();
+  }
+
+
+  initializeDates() {
+    var current = moment().format('L');
+    current = current.split('/');
+    current[1] = '01';
+    current = current.join();
+
+    var previous = this.subtractMonth(current);
+    var next = this.addMonth(current);
+    var afterNext = this.addMonth(next);
+
+    this.updateState(previous, current, next, afterNext);
+  }
+
+
   previousMonths() {
     var previous, current, next, afterNext;
     var date = this.state.currentDate;
@@ -32,17 +51,7 @@ class Calendar extends React.Component {
     afterNext = this.addMonth(date);
     previous = this.subtractMonth(current);
 
-    this.setState({
-      currentDate: current,
-      monthL0: moment(previous).format('MMMM'),
-      dateL0: moment(previous).format('L'),
-      monthL1: moment(current).format('MMMM'),
-      dateL1: moment(current).format('L'),
-      monthR1: moment(next).format('MMMM'),
-      dateR1: moment(next).format('L'),
-      monthR2: moment(afterNext).format('MMMM'),
-      dateR2: moment(afterNext).format('L')
-    });
+    this.updateState(previous, current, next, afterNext);
   }
 
   nextMonths() {
@@ -54,6 +63,10 @@ class Calendar extends React.Component {
     afterNext = this.addMonth(next);
     previous = date;
 
+    this.updateState(previous, current, next, afterNext);
+  }
+
+  updateState(previous, current, next, afterNext) {
     this.setState({
       currentDate: current,
       monthL0: moment(previous).format('MMMM'),
@@ -64,7 +77,7 @@ class Calendar extends React.Component {
       dateR1: moment(next).format('L'),
       monthR2: moment(afterNext).format('MMMM'),
       dateR2: moment(afterNext).format('L')
-    });
+    })
   }
 
   subtractMonth(string) {
@@ -110,13 +123,6 @@ class Calendar extends React.Component {
   render() {
     return (
       <div className='calendar' style={{'display': 'flex'}}>
-        {/* <div className='cal-previous cal-month month-overflow'>
-          <div className='cal-tableheader-prev'>
-            <button className='cal-prev-month' style={{'hidden': true}}></button>
-            <strong>{this.state.monthL0}</strong>
-          </div>
-          <Month month={this.state.monthL0} />
-        </div> */}
         <div className='calendar-view' style={{'display': 'flex'}}>
           <div className='cal-current cal-month'>
             <div className='cal-tableheader-prev'>
@@ -133,13 +139,6 @@ class Calendar extends React.Component {
             <Month date={this.state.dateR1} reservations={this.props.reservations}/>
           </div>
         </div>
-        {/* <div className='cal-after-next cal-month month-overflow'>
-          <div className='cal-tableheader-next'>
-            <strong>{this.state.monthR2}</strong>
-            <button className='cal-after-next-month'></button>
-          </div>
-          <Month month={this.state.monthR2} />
-        </div> */}
       </div>
     )
   }

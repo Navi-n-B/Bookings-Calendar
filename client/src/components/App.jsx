@@ -12,14 +12,11 @@ class App extends React.Component {
 
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getRoomData();
   }
 
   componentDidUpdate(prevState) {
-    // this.getRoomData();
-    console.log(prevState)
-    console.log(this.state.reservations)
     if (this.state.reservations !== prevState.reservations) {
       this.render();
     }
@@ -34,7 +31,7 @@ class App extends React.Component {
           this.setState({
             reservations: data
           });
-          console.log(data);
+          // console.log(data);
         } else {
           console.log('error retrieving data');
         }

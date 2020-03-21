@@ -10,7 +10,7 @@
   float: left;
 }
 
-.cal-day {
+.date-avail {
   text-align: center;
   width: 20px;
   height: 20px;
@@ -19,4 +19,15 @@
   border: 1px solid rgb(237, 246, 246);
   border-radius: 5px;
   background-color: rgb(237, 246, 246);
+}
+
+.date-unavail {
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  color: rgb(72, 72, 72);
+  border: 1px solid rgb(216, 216, 216);
+  border-radius: 5px;
+  background-color: rgb(216, 216, 216);
 }

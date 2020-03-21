@@ -2,204 +2,206 @@
 
 exports[`Month loads a snapshot 1`] = `
 <div>
-  <table>
+  <table
+    onClick={[Function]}
+  >
     <tbody>
       <tr>
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           1
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           2
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           3
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           4
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           5
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           6
         </td>
       </tr>
       <tr>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           7
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           8
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           9
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           10
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           11
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           12
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           13
         </td>
       </tr>
       <tr>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           14
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           15
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           16
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           17
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           18
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           19
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           20
         </td>
       </tr>
       <tr>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           21
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           22
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           23
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           24
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           25
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           26
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           27
         </td>
       </tr>
       <tr>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           28
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           29
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-avail"
         >
           30
         </td>
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
       </tr>
       <tr>
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
         <td
-          className="cal-day date-avail"
+          className="date-empty"
         />
       </tr>
     </tbody>
