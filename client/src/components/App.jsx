@@ -9,14 +9,27 @@ class App extends React.Component {
     this.state = {
       reservations: []
     };
+
   }
 
+  componentWillMount() {
+    this.getRoomData();
+  }
 
-  componentDidMount() {
+  componentDidUpdate(prevState) {
+    // this.getRoomData();
+    console.log(prevState)
+    console.log(this.state.reservations)
+    if (this.state.reservations !== prevState.reservations) {
+      this.render();
+    }
+  }
+
+  getRoomData() {
     $.ajax({
       method: 'GET',
-      url: '/rooms'})
-      .done((err, data) => {
+      url: '/api'})
+      .done((data) => {
         if (data) {
           this.setState({
             reservations: data
@@ -32,8 +45,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Calendar />
+        <Calendar reservations={this.state.reservations}/>
         <Bookings />
+        <button onClick={this.getRoomData.bind(this)}>TEST</button>
       </div>
     )
   }

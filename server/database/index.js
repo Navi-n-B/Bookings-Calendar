@@ -103,4 +103,3 @@ Reservations.init({
 
 module.exports.Listings = Listings;
 module.exports.Reservations = Reservations;
-module.exports.Query = Reservations.findAll;
