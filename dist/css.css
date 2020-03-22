@@ -15,10 +15,10 @@
   width: 20px;
   height: 20px;
   font-size: 14px;
-  color: rgb(72, 72, 72);
-  border: 1px solid rgb(237, 246, 246);
+  color: rgb(110, 160, 180);
+  border: 1px solid rgba(165, 200, 220, 0.2);
   border-radius: 5px;
-  background-color: rgb(237, 246, 246);
+  background-color: rgba(165, 200, 220, 0.5);
 }
 
 .date-unavail {
@@ -26,8 +26,14 @@
   width: 20px;
   height: 20px;
   font-size: 14px;
-  color: rgb(72, 72, 72);
-  border: 1px solid rgb(216, 216, 216);
+  color: rgba(190, 190, 190, 0.5);
+  border: 1px solid rgba(240, 240, 240, 0.5);
   border-radius: 5px;
-  background-color: rgb(216, 216, 216);
+  background-color: rgba(240, 240, 240, 0.5);
+}
+
+.cal-sel {
+  color: rgba(55, 85, 80, 0.5);
+  background-color: rgba(86, 130, 125, 0.5);
+  border: 1px solid rgba(86, 130, 125, 0.5);
 }

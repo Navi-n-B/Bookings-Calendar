@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Month from './Month.jsx';
+import $ from 'jquery';
 // import Calendar from './Calendar';
 
 class Calendar extends React.Component {
@@ -8,23 +9,28 @@ class Calendar extends React.Component {
     super(props);
     this.state = {
       currentDate: moment().format('L'),
-      monthL0: moment().subtract(1, 'M').format('MMMM'),
-      dateL0: moment().subtract(1, 'M').format('L'),
       monthL1: moment().format('MMMM'),
-      dateL1: moment().format('L'),
+      dateL1: moment().format('YYYY-MM-DD'),
       monthR1: moment().add(1, 'M').format('MMMM'),
-      dateR1: moment().add(1, 'M').format('L'),
-      monthR2: moment().add(2, 'M').format('MMMM'),
-      dateR2: moment().add(2, 'M').format('L')
+      dateR1: moment().add(1, 'M').format('YYYY-MM-DD'),
+      selectedRes: []
     };
 
     this.previousMonths = this.previousMonths.bind(this);
     this.nextMonths = this.nextMonths.bind(this);
+    this.handleStartChange = this.handleStartChange.bind(this);
+    this.handleEndChange = this.handleEndChange.bind(this);
   }
 
 
   componenetDidMount() {
     this.initializeDates();
+  }
+
+  componenetDidMount() {
+    if (this.state.selectedRes.length > 1) {
+      this.render();
+    }
   }
 
 
@@ -34,49 +40,39 @@ class Calendar extends React.Component {
     current[1] = '01';
     current = current.join();
 
-    var previous = this.subtractMonth(current);
     var next = this.addMonth(current);
-    var afterNext = this.addMonth(next);
 
-    this.updateState(previous, current, next, afterNext);
+    this.updateState(current, next);
   }
 
 
   previousMonths() {
-    var previous, current, next, afterNext;
+    var current, next;
     var date = this.state.currentDate;
 
     current = this.subtractMonth(date);
     next = date;
-    afterNext = this.addMonth(date);
-    previous = this.subtractMonth(current);
 
-    this.updateState(previous, current, next, afterNext);
+    this.updateState(current, next);
   }
 
   nextMonths() {
-    var previous, current, next, afterNext;
+    var current, next;
     var date = this.state.currentDate;
 
     current = this.addMonth(date);
     next = this.addMonth(current);
-    afterNext = this.addMonth(next);
-    previous = date;
 
-    this.updateState(previous, current, next, afterNext);
+    this.updateState(current, next);
   }
 
-  updateState(previous, current, next, afterNext) {
+  updateState(current, next) {
     this.setState({
       currentDate: current,
-      monthL0: moment(previous).format('MMMM'),
-      dateL0: moment(previous).format('L'),
       monthL1: moment(current).format('MMMM'),
-      dateL1: moment(current).format('L'),
+      dateL1: moment(current).format('YYYY-MM-DD'),
       monthR1: moment(next).format('MMMM'),
-      dateR1: moment(next).format('L'),
-      monthR2: moment(afterNext).format('MMMM'),
-      dateR2: moment(afterNext).format('L')
+      dateR1: moment(next).format('YYYY-MM-DD')
     })
   }
 
@@ -96,6 +92,7 @@ class Calendar extends React.Component {
       month = `0${month}`;
     }
 
+    // return moment(string).subtract(1, 'M').format('MM/DD/YYYY');
     var date = `${month}/01/${year}`;
     return date;
   }
@@ -105,7 +102,7 @@ class Calendar extends React.Component {
     var month = parseInt(array[0]);
     var year = parseInt(array[2]);
 
-    if (month + 1 === 13) {
+    if (month > 12) {
       year += 1;
       month = 1;
     } else {
@@ -116,8 +113,25 @@ class Calendar extends React.Component {
       month = `0${month}`;
     }
 
+    // return moment(string).add(1, 'M').format('MM/DD/YYYY');
     var date = `${month}/01/${year}`;
     return date;
+  }
+
+  handleStartChange(date) {
+    var resDates = this.state.resDates;
+    resDates[0] = date;
+    this.setState({
+      resDates: resDates
+    })
+  }
+
+  handleEndChange(date) {
+    var resDates = this.state.resDates;
+    resDates[1] = date;
+    this.setState({
+      resDates: resDates
+    })
   }
 
   render() {
@@ -129,14 +143,14 @@ class Calendar extends React.Component {
               <button className='cal-current-month' onClick={this.previousMonths}></button>
               <strong>{this.state.monthL1}</strong>
             </div>
-            <Month date={this.state.dateL1} reservations={this.props.reservations}/>
+            <Month date={this.state.dateL1} month={this.state.monthL1} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
           </div>
           <div className='cal-next cal-month'>
             <div className='cal-tableheader-next'>
               <strong>{this.state.monthR1}</strong>
               <button className='cal-next-month' onClick={this.nextMonths}></button>
             </div>
-            <Month date={this.state.dateR1} reservations={this.props.reservations}/>
+            <Month date={this.state.dateR1} month={this.state.monthR1} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
           </div>
         </div>
       </div>

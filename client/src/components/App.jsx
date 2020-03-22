@@ -25,7 +25,7 @@ class App extends React.Component {
   getRoomData() {
     $.ajax({
       method: 'GET',
-      url: '/api'})
+      url: '/api/Calendar'})
       .done((data) => {
         if (data) {
           this.setState({

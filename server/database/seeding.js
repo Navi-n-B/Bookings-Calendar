@@ -65,7 +65,7 @@ var getDocs = function(id, callback) {
     }
   };
 
-
+  // console.log(output);
   callback(output);
   return output;
 };
@@ -84,6 +84,6 @@ var seedTable = function(array) {
 
 // console.log(typeof Reservations);
 
-getDocs(example_ids[6], seedTable);
+getDocs(example_ids[7], seedTable);
 
 // console.log(example_ids[0]);
