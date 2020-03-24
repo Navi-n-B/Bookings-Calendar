@@ -8,6 +8,7 @@ class Month extends React.Component {
     super(props);
     this.state = {
       days: [],
+      cacheDays: [],
       r1: [],
       r2: [],
       r3: [],
@@ -17,7 +18,9 @@ class Month extends React.Component {
       selectedStart: null,
       selectedEnd: null,
       selectedRes: this.props.selectedRes,
+      maxPossibleEnd: null,
       selection: false,
+      initialzed: false,
       month: moment(this.props.date).format('MMMM'),
       year: moment(this.props.date).format('YYYY')
     };
@@ -67,6 +70,12 @@ class Month extends React.Component {
       }
     }
   this.parseRows(dateArray);
+  if (!this.state.initialzed) {
+    this.setState({
+      initialzed: true,
+      cacheDays: dateArray
+    })
+  }
   }
 
   parseRows(dateArray) {
@@ -157,7 +166,6 @@ class Month extends React.Component {
   }
 
   clickHandler(e) {
-    // console.log('clicked!');
     if (e.target.className.includes('date-avail')) {
       var date = e.target.className.split(' ')[0];
 
@@ -170,6 +178,7 @@ class Month extends React.Component {
           selectedRes: resDates
         });
       $target.addClass('cal-sel');
+      this.calculateMaxDate(date, this.toggleSelectableDates.bind(this));
       }
 
       if (this.state.selectedStart  && this.state.selectedEnd === null) {
@@ -194,17 +203,17 @@ class Month extends React.Component {
             selectedRes: resDates
           });
         }
+
         if (moment(date).isBetween(this.state.selectedStart, this.state.selectedEnd)) {
           var resDates = this.state.selectedRes;
           resDates[1] = date;
           var $target = $(`.${date}`);
-          // var $old = $(`.${this.state.selectedEnd}`);
-          // $old.removeClass('cal-sel');
           this.setState({
             selectedEnd: date,
             selectedRes: resDates
           });
         }
+
         if (moment(this.state.selectedEnd).isBefore(date)) {
           var resDates = this.state.selectedRes;
           resDates[1] = date;
@@ -215,15 +224,69 @@ class Month extends React.Component {
           });
         }
       }
-      console.log(this.state.selectedRes)
+
       if (this.state.selectedRes.length === 2) {
         this.updateSelected(resDates);
       }
+      this.setState({
+        selection: true
+      })
     }
   }
 
+  calculateMaxDate(input, callback) {
+    var dates = Array.from(this.state.days);
+    var day = input.split('-')[1];
+    var max;
+    for (var i = 0; i < dates.length; i++) {
+      if (!dates[i].class.includes('date-empty')) {
+        if (dates[i].date < day) {
+          dates[i].class.replace('date-avail', 'date-unavail');
+        }
+        if (dates[i].class.includes('date-unavail')) {
+          break;
+        }
+        if (dates[i].date > day && dates[i].class.includes('date-avail')) {
+          max = dates[i].class.split(' ')[0];
+        }
+      }
+    }
+    this.setState({
+      maxPossibleEnd: max
+    });
+    callback(day, max);
+  }
+
+  toggleSelectableDates(min, max) {
+    var min, max, temp;
+    var dates = Array.from(this.state.days);
+    if (max) {
+      max = max.split('-')[1];
+      for (var i = 0; i < dates.length; i++) {
+        if (dates[i].date < min || dates[i].date > max) {
+          if (dates[i].class.includes('date-avail')) {
+            dates[i].class = dates[i].class.split(' ')[0] + ' date-unavail';
+          }
+        }
+      }
+
+      this.setState({
+        days: dates
+      })
+    }
+  }
+
+  untoggleSelectableDates() {
+    var dates = this.state.cacheDays;
+
+    this.setState({
+      days: dates
+    });
+    this.generateDays();
+  }
+
   clearSelected() {
-    var dates = this.state.days;
+    var dates = Array.from(this.state.days);
     for (var i = 0; i < dates.length; i++) {
       if (dates[i].class.includes('cal-sel')) {
         dates[i].class = dates[i].class.split(' ')[0] + ' ' + dates[i].class.split(' ')[1];
@@ -237,6 +300,8 @@ class Month extends React.Component {
       selectedRes: [],
       selection: false
     })
+
+    this.untoggleSelectableDates();
   }
 
 
@@ -246,7 +311,7 @@ class Month extends React.Component {
       <div>
           <table className='calendar-month' onClick={this.clickHandler}>
             <tbody>
-              <tr className='month-headers'>
+              <tr className='day-headers'>
                 <td>Su</td>
                 <td>Mo</td>
                 <td>Tu</td>

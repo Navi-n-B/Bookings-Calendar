@@ -33,19 +33,18 @@ class App extends React.Component {
           this.setState({
             reservations: data
           });
-          // console.log(data);
         } else {
           console.log('error retrieving data');
         }
       })
   }
+
   getListingInfo() {
     $.ajax({
       method: 'GET',
       url: '/api/Booking'})
       .done((data) => {
         if (data) {
-          console.log(data[0]);
           this.setState({
             listing: data[0]
           });
@@ -60,7 +59,7 @@ class App extends React.Component {
     return (
       <div>
         <Calendar reservations={this.state.reservations}/>
-        <Bookings listing={this.state.listing} reservations={this.state.reservations}/>
+        {/* <Bookings listing={this.state.listing} reservations={this.state.reservations}/> */}
       </div>
     )
   }

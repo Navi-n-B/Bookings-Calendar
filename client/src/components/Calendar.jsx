@@ -137,39 +137,16 @@ class Calendar extends React.Component {
     })
   }
 
-  // render() {
-  //   return (
-  //     <div className='calendar' style={{'display': 'flex'}}>
-  //       <div className='calendar-view' style={{'display': 'flex'}}>
-  //         <div className='cal-current cal-month'>
-  //           <div className='cal-tableheader-prev'>
-  //             <button className='cal-current-month' onClick={this.previousMonths}>&#8592;</button>
-  //             <strong>{moment(this.state.dateL1).format('MMMM YYYY')}</strong>
-  //           </div>
-  //           <Month date={this.state.dateL1} month={moment(this.state.dateL1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
-  //         </div>
-  //         <div className='cal-next cal-month'>
-  //           <div className='cal-tableheader-next'>
-  //             <strong>{moment(this.state.dateR1).format('MMMM YYYY')}</strong>
-  //             <button className='cal-next-month' onClick={this.nextMonths}>&#8594;</button>
-  //           </div>
-  //           <Month date={this.state.dateR1} month={moment(this.state.dateR1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
   render() {
     return (
       <div className='calendar'>
         <div className='calendar-view'>
             <div className='cal-tableheader-prev'>
               <button className='cal-current-month' onClick={this.previousMonths}>&#8592;</button>
-              <strong>{moment(this.state.dateL1).format('MMMM YYYY')}</strong>
+              <strong className='month-header'>{moment(this.state.dateL1).format('MMMM YYYY')}</strong>
             </div>
             <div className='cal-tableheader-next'>
-              <strong>{moment(this.state.dateR1).format('MMMM YYYY')}</strong>
+              <strong className='month-header'>{moment(this.state.dateR1).format('MMMM YYYY')}</strong>
               <button className='cal-next-month' onClick={this.nextMonths}>&#8594;</button>
             </div>
             <div className='cal-current'>
