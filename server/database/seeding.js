@@ -1,17 +1,18 @@
 const Reservations = require('./index.js').Reservations;
+const Listings = require('./index.js').Listings;
 const example_ids = require('./listing_ids.js').listings_ids;
 const moment = require('moment');
 const Sequelize = require('sequelize');
 var Promise = require('bluebird');
 
-// Reservations.sync({force: true});
+// Listings.sync({force: true});
 
 
 var popularityRates = { 1: 0.2, 2: 0.3, 3: 0.5, 4: 0.6};
 var bookedDays = { 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 2, 8: 3, 9: 3, 10: 3, 11: 4, 12: 4, 13: 4, 14: 5, 15: 5, 16: 5, 17: 6, 18: 6, 19: 7};
 // var count = 0;
 
-var getDocs = function(id, callback) {
+var seedReservations = function(id, callback) {
   var output = [], popularity, booked, date1, date2, days, month = 0, daysRate, userId, reservation, decay = 1;
   date1 = moment();
   popularity = Math.round(Math.random() * 4);
@@ -71,7 +72,7 @@ var getDocs = function(id, callback) {
 };
 
 
-var seedTable = function(array) {
+var seedTableRes = function(array) {
   // console.log('this ran too');
   Reservations.bulkCreate(array)
     .then(() => {
@@ -84,6 +85,44 @@ var seedTable = function(array) {
 
 // console.log(typeof Reservations);
 
-getDocs(example_ids[7], seedTable);
+// seedReservations(example_ids[8], seedTableRes);
 
 // console.log(example_ids[0]);
+
+var seedListings = function(id, callback) {
+  var listings_id = id;
+  var host_id =  Math.floor(Math.random() * 500000);
+  var guestSize = Math.round(Math.random() * 12);
+  var price = Math.floor(Math.random() * (200 - 60) + 60);
+  var minimumStay = Math.floor(Math.random() * (2 - 1) + 1);
+  var refund = Math.round(Math.random())
+  var Listing = {};
+  var output = [];
+
+  Listing.id = id;
+  Listing.host_id= host_id;
+  Listing.guest_size= guestSize;
+  Listing.price= price;
+  Listing.refund= refund;
+  Listing.minimum_stay= minimumStay;
+
+  output.push(Listing);
+
+  console.log(Listing);
+  callback(Listing);
+  // return output;
+
+};
+
+var seedTableList = function(obj) {
+  // console.log('this ran too');
+  Listings.update(obj)
+    .then(() => {
+      console.log('success!')
+    })
+    .catch(() => {
+      console.log('something is fucky')
+    })
+};
+
+seedListings(example_ids[2], seedTableList);

@@ -17,12 +17,15 @@ class Month extends React.Component {
       selectedStart: null,
       selectedEnd: null,
       selectedRes: this.props.selectedRes,
+      selection: false,
       month: moment(this.props.date).format('MMMM'),
       year: moment(this.props.date).format('YYYY')
     };
 
     this.month = moment(this.props.date).format('MMMM');
     this.clickHandler = this.clickHandler.bind(this);
+    this.clearSelected = this.clearSelected.bind(this);
+    this.linkStyle = {hidden: this.state.selection};
   }
 
   componentDidMount() {
@@ -148,10 +151,13 @@ class Month extends React.Component {
     }
 
     this.parseRows(dates);
+    this.setState({
+      selection: true
+    });
   }
 
   clickHandler(e) {
-    console.log('clicked!');
+    // console.log('clicked!');
     if (e.target.className.includes('date-avail')) {
       var date = e.target.className.split(' ')[0];
 
@@ -209,11 +215,28 @@ class Month extends React.Component {
           });
         }
       }
+      console.log(this.state.selectedRes)
+      if (this.state.selectedRes.length === 2) {
+        this.updateSelected(resDates);
+      }
     }
-    console.log(this.state.selectedRes)
-    if (this.state.selectedRes.length === 2) {
-      this.updateSelected(resDates);
+  }
+
+  clearSelected() {
+    var dates = this.state.days;
+    for (var i = 0; i < dates.length; i++) {
+      if (dates[i].class.includes('cal-sel')) {
+        dates[i].class = dates[i].class.split(' ')[0] + ' ' + dates[i].class.split(' ')[1];
+      }
     }
+
+    this.setState({
+      days: dates,
+      selectedStart: null,
+      selectedEnd: null,
+      selectedRes: [],
+      selection: false
+    })
   }
 
 
@@ -221,8 +244,17 @@ class Month extends React.Component {
   render() {
     return (
       <div>
-          <table onClick={this.clickHandler}>
+          <table className='calendar-month' onClick={this.clickHandler}>
             <tbody>
+              <tr className='month-headers'>
+                <td>Su</td>
+                <td>Mo</td>
+                <td>Tu</td>
+                <td>We</td>
+                <td>Th</td>
+                <td>Fr</td>
+                <td>Sa</td>
+              </tr>
               <tr>{this.state.r1.map((days, index) => (
                 <td key={this.getKey(this.state.r1, index)} className={days.class}>{days.date}</td>))}
               </tr>
@@ -243,6 +275,7 @@ class Month extends React.Component {
               </tr>
             </tbody>
           </table>
+          <a className='clear-dates' onClick={this.clearSelected} style={this.state.selection ? {visibility: 'visible'} : {visibility: 'hidden'}}>Clear selected dates</a>
       </div>
     )
   }

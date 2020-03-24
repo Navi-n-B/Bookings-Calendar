@@ -7,13 +7,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reservations: []
+      reservations: [],
+      listing: {}
     };
 
   }
 
   componentDidMount() {
-    this.getRoomData();
+    this.getReservations();
+    this.getListingInfo();
   }
 
   componentDidUpdate(prevState) {
@@ -22,7 +24,7 @@ class App extends React.Component {
     }
   }
 
-  getRoomData() {
+  getReservations() {
     $.ajax({
       method: 'GET',
       url: '/api/Calendar'})
@@ -37,13 +39,28 @@ class App extends React.Component {
         }
       })
   }
+  getListingInfo() {
+    $.ajax({
+      method: 'GET',
+      url: '/api/Booking'})
+      .done((data) => {
+        if (data) {
+          console.log(data[0]);
+          this.setState({
+            listing: data[0]
+          });
+        } else {
+          console.log('error retrieving data');
+        }
+      })
+  }
 
 
   render() {
     return (
       <div>
         <Calendar reservations={this.state.reservations}/>
-        <Bookings />
+        <Bookings listing={this.state.listing} reservations={this.state.reservations}/>
       </div>
     )
   }

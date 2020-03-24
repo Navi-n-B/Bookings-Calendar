@@ -1,39 +1,94 @@
-.cal-month {
-  padding: 8px;
+.calendar {
+  width: 632px;
+  height: 342px;
 }
 
-.cal-tableheader-next {
-  float: right;
+.calendar-view{
+  display: grid;
+  grid-template-columns: (2, 2fr);
+  grid-template-rows: 0.5fr 3fr 0.5fr;
+  column-gap: 0px;
+  row-gap: 0px;
+}
+
+.calendar-month {
+  width: 307px;
+  height: 240;
+  padding: 6px;
 }
 
 .cal-tableheader-prev {
-  float: left;
+  /* text-align: left; */
+  grid-area: 1 / 1 / 2 / 2;
+  font-weight: bold;
+  font-size: 18px;
+  padding-left: 18px;
+}
+
+.cal-tableheader-next {
+  text-align: right;
+  grid-area: 1 / 2 / 2 / 3;
+  font-weight: bold;
+  font-size: 18px;
+  padding-right: 24px;
+}
+
+.cal-current {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+/* .cal-current > .calender-month {
+  place-content: stretch;
+} */
+
+.cal-next {
+  grid-area: 2 / 2 / 3 / 3;
+}
+
+.month-headers {
+  color: rgb(117, 117, 117);
+  text-align: center;
 }
 
 .date-avail {
+  cursor: pointer;
   text-align: center;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 39px;
   font-size: 14px;
-  color: rgb(110, 160, 180);
-  border: 1px solid rgba(165, 200, 220, 0.2);
-  border-radius: 5px;
-  background-color: rgba(165, 200, 220, 0.5);
+  color: rgb(0, 132, 137);
+  border: 2px solid rgba(165, 200, 220);
+  border-radius: 2px;
+  background-color: rgba(165, 200, 220);
+  box-sizing: border-box;
+  padding: 0px;
 }
 
 .date-unavail {
+  cursor: pointer;
   text-align: center;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 39px;
   font-size: 14px;
-  color: rgba(190, 190, 190, 0.5);
-  border: 1px solid rgba(240, 240, 240, 0.5);
-  border-radius: 5px;
-  background-color: rgba(240, 240, 240, 0.5);
+  color: rgba(190, 190, 190);
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 2px;
+  background-color: rgb(237, 246, 246);
+  box-sizing: border-box;
+  padding: 0px;
 }
 
 .cal-sel {
-  color: rgba(55, 85, 80, 0.5);
-  background-color: rgba(86, 130, 125, 0.5);
-  border: 1px solid rgba(86, 130, 125, 0.5);
+  cursor: pointer;
+  width: 40px;
+  height: 39px;
+  color: white;
+  background-color: rgb(0, 132, 137);
+  border: 2px solid rgb(0, 132, 137);
+  box-sizing: border-box;
+  padding: 0px;
+}
+
+.bookings {
+  float: right;
 }

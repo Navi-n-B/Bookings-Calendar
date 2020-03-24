@@ -92,7 +92,7 @@ class Calendar extends React.Component {
       month = `0${month}`;
     }
 
-    // return moment(string).subtract(1, 'M').format('MM/DD/YYYY');
+    return moment(string).subtract(1, 'M').format('MM/DD/YYYY');
     var date = `${month}/01/${year}`;
     return date;
   }
@@ -113,8 +113,11 @@ class Calendar extends React.Component {
       month = `0${month}`;
     }
 
+    // console.log(moment(string).add(1, 'M').format('MM/DD/YYYY'));
     // return moment(string).add(1, 'M').format('MM/DD/YYYY');
+    // console.log(date);
     var date = `${month}/01/${year}`;
+    console.log(date);
     return date;
   }
 
@@ -134,24 +137,47 @@ class Calendar extends React.Component {
     })
   }
 
+  // render() {
+  //   return (
+  //     <div className='calendar' style={{'display': 'flex'}}>
+  //       <div className='calendar-view' style={{'display': 'flex'}}>
+  //         <div className='cal-current cal-month'>
+  //           <div className='cal-tableheader-prev'>
+  //             <button className='cal-current-month' onClick={this.previousMonths}>&#8592;</button>
+  //             <strong>{moment(this.state.dateL1).format('MMMM YYYY')}</strong>
+  //           </div>
+  //           <Month date={this.state.dateL1} month={moment(this.state.dateL1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
+  //         </div>
+  //         <div className='cal-next cal-month'>
+  //           <div className='cal-tableheader-next'>
+  //             <strong>{moment(this.state.dateR1).format('MMMM YYYY')}</strong>
+  //             <button className='cal-next-month' onClick={this.nextMonths}>&#8594;</button>
+  //           </div>
+  //           <Month date={this.state.dateR1} month={moment(this.state.dateR1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   )
+  // }
+
   render() {
     return (
-      <div className='calendar' style={{'display': 'flex'}}>
-        <div className='calendar-view' style={{'display': 'flex'}}>
-          <div className='cal-current cal-month'>
+      <div className='calendar'>
+        <div className='calendar-view'>
             <div className='cal-tableheader-prev'>
-              <button className='cal-current-month' onClick={this.previousMonths}></button>
-              <strong>{this.state.monthL1}</strong>
+              <button className='cal-current-month' onClick={this.previousMonths}>&#8592;</button>
+              <strong>{moment(this.state.dateL1).format('MMMM YYYY')}</strong>
             </div>
-            <Month date={this.state.dateL1} month={this.state.monthL1} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
-          </div>
-          <div className='cal-next cal-month'>
             <div className='cal-tableheader-next'>
-              <strong>{this.state.monthR1}</strong>
-              <button className='cal-next-month' onClick={this.nextMonths}></button>
+              <strong>{moment(this.state.dateR1).format('MMMM YYYY')}</strong>
+              <button className='cal-next-month' onClick={this.nextMonths}>&#8594;</button>
             </div>
-            <Month date={this.state.dateR1} month={this.state.monthR1} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
-          </div>
+            <div className='cal-current'>
+              <Month  date={this.state.dateL1} month={moment(this.state.dateL1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
+            </div>
+            <div className='cal-next'>
+              <Month date={this.state.dateR1} month={moment(this.state.dateR1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
+            </div>
         </div>
       </div>
     )

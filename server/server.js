@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const port = 6660;
 const Reservations = require('./database/index.js').Reservations;
-const { queryResByListing } = require('./database/db.helpers.js');
+const Listings = require('./database/index.js').Listings;
+const { queryResByListing, queryListingsById } = require('./database/db.helpers.js');
 const { formatAllRes } = require('./helpers.js');
 var Promise = require('bluebird');
 const Sequelize = require('sequelize');
@@ -25,7 +26,16 @@ app.get('/api/Calendar', (req, res) => {
       console.log('your queries suck');
       res.sendStatus(404);
     })
-
+});
+app.get('/api/Booking', (req, res) => {
+  return queryListingsById(22475432)
+    .then((data) => {
+      res.send((data));
+    })
+    .catch(() => {
+      console.log('your queries suck');
+      res.sendStatus(404);
+    })
 });
 
 // app.post('/', (req, res) => {
