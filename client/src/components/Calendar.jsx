@@ -34,6 +34,7 @@ class Calendar extends React.Component {
   }
 
 
+  // year crossover is bugged
   initializeDates() {
     var current = moment().format('L');
     current = current.split('/');
@@ -117,7 +118,7 @@ class Calendar extends React.Component {
     // return moment(string).add(1, 'M').format('MM/DD/YYYY');
     // console.log(date);
     var date = `${month}/01/${year}`;
-    console.log(date);
+    // console.log(date);
     return date;
   }
 
@@ -137,6 +138,7 @@ class Calendar extends React.Component {
     })
   }
 
+
   render() {
     return (
       <div className='calendar'>
@@ -150,10 +152,10 @@ class Calendar extends React.Component {
               <button className='cal-next-month' onClick={this.nextMonths}>&#8594;</button>
             </div>
             <div className='cal-current'>
-              <Month  date={this.state.dateL1} month={moment(this.state.dateL1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
+              <Month  date={this.state.dateL1} month={moment(this.state.dateL1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} clearRes={this.clearRes}/>
             </div>
             <div className='cal-next'>
-              <Month date={this.state.dateR1} month={moment(this.state.dateR1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange}/>
+              <Month date={this.state.dateR1} month={moment(this.state.dateR1).format('MMMM')} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} clearRes={this.clearRes}/>
             </div>
         </div>
       </div>

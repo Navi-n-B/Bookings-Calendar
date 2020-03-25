@@ -31,6 +31,7 @@ class Month extends React.Component {
     this.linkStyle = {hidden: this.state.selection};
   }
 
+  // need to pivot to a 2 month render to handle reservations spanning different months
   componentDidMount() {
    this.generateDays();
   }
@@ -170,15 +171,19 @@ class Month extends React.Component {
       var date = e.target.className.split(' ')[0];
 
       if (this.state.selectedStart === null) {
-        var resDates = this.state.selectedRes;
-        resDates[0] = date;
-        var $target = $(`.${date}`);
-        this.setState({
-          selectedStart: date,
-          selectedRes: resDates
-        });
-      $target.addClass('cal-sel');
-      this.calculateMaxDate(date, this.toggleSelectableDates.bind(this));
+        if (this.checkAdjacent(date)) {
+          var resDates = this.state.selectedRes;
+          resDates[0] = date;
+          var $target = $(`.${date}`);
+          this.setState({
+            selectedStart: date,
+            selectedRes: resDates
+          });
+
+          $target.addClass('cal-sel');
+          this.calculateMaxDate(date, this.toggleSelectableDates.bind(this));
+          this.wasClicked();
+        }
       }
 
       if (this.state.selectedStart  && this.state.selectedEnd === null) {
@@ -190,6 +195,8 @@ class Month extends React.Component {
             selectedEnd: date,
             selectedRes: resDates
           });
+
+          this.wasClicked();
         }
       }
 
@@ -202,6 +209,8 @@ class Month extends React.Component {
             selectedStart: date,
             selectedRes: resDates
           });
+
+          this.wasClicked();
         }
 
         if (moment(date).isBetween(this.state.selectedStart, this.state.selectedEnd)) {
@@ -212,6 +221,8 @@ class Month extends React.Component {
             selectedEnd: date,
             selectedRes: resDates
           });
+
+          this.wasClicked();
         }
 
         if (moment(this.state.selectedEnd).isBefore(date)) {
@@ -222,15 +233,14 @@ class Month extends React.Component {
             selectedEnd: date,
             selectedRes: resDates
           });
+
+          this.wasClicked();
         }
       }
 
       if (this.state.selectedRes.length === 2) {
         this.updateSelected(resDates);
       }
-      this.setState({
-        selection: true
-      })
     }
   }
 
@@ -254,6 +264,7 @@ class Month extends React.Component {
     this.setState({
       maxPossibleEnd: max
     });
+
     callback(day, max);
   }
 
@@ -302,6 +313,29 @@ class Month extends React.Component {
     })
 
     this.untoggleSelectableDates();
+  }
+
+  checkAdjacent(date) {
+    var next;
+    var dates = this.state.days;
+    for (var i = 0; i < dates.length; i++) {
+      if (dates[i].class.split(' ')[0] === date) {
+        next = dates[i+1].class;
+        break;
+      }
+    }
+
+    if (next.includes('date-avail')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  wasClicked() {
+    this.setState({
+      selection: true
+    })
   }
 
 

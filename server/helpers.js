@@ -17,10 +17,16 @@ var formatAllRes = function(data) {
     if (!output[yearEnd]) {
       output[yearEnd] = {};
     }
-    if (!output[monthStart]) {
+    if (!output[yearStart][monthStart]) {
       output[yearStart][monthStart] = {};
     }
-    if (!output[monthEnd]) {
+    if (!output[yearEnd][monthStart]) {
+      output[yearEnd][monthStart] = {};
+    }
+    if (!output[yearStart][monthEnd]) {
+      output[yearStart][monthEnd] = {};
+    }
+    if (!output[yearEnd][monthEnd]) {
       output[yearEnd][monthEnd] = {};
     }
 
@@ -28,9 +34,8 @@ var formatAllRes = function(data) {
     endDate = moment(data[i].end_date).date();
 
     if (monthStart === monthEnd) {
-      while (startDate < endDate) {
-        output[yearStart][monthStart][startDate] = true;
-        startDate++;
+      for (var j = startDate; j < endDate; j++) {
+        output[yearStart][monthStart][l] = true;
       }
     }
 

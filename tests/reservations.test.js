@@ -35,7 +35,7 @@ var getStayDates = function (INPUT) {
   })
 };
 
-describe('gets the reservations for the inputted listing', function() {
+describe('GET request for api/Calendar', function() {
   it('gets the reservations for the inputted listing', function (done) {
     getStayDates(45673).then((data) => {
       expect(data[0].start_date).toBe('2020-09-16');

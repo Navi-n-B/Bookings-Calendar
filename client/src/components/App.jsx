@@ -10,12 +10,12 @@ class App extends React.Component {
       reservations: [],
       listing: {}
     };
-
+    this.id = location.pathname.split('rooms/')[1];
   }
 
   componentDidMount() {
     this.getReservations();
-    this.getListingInfo();
+    // this.getListingInfo();
   }
 
   componentDidUpdate(prevState) {
@@ -27,12 +27,13 @@ class App extends React.Component {
   getReservations() {
     $.ajax({
       method: 'GET',
-      url: '/api/Calendar'})
+      url: `/api/Calendar/${this.id}`})
       .done((data) => {
         if (data) {
           this.setState({
             reservations: data
           });
+          // console.log(data);
         } else {
           console.log('error retrieving data');
         }
@@ -42,12 +43,13 @@ class App extends React.Component {
   getListingInfo() {
     $.ajax({
       method: 'GET',
-      url: '/api/Booking'})
+      url: `/api/Bookings/${this.id}`})
       .done((data) => {
         if (data) {
           this.setState({
             listing: data[0]
           });
+          // console.log(data);
         } else {
           console.log('error retrieving data');
         }

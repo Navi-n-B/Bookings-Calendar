@@ -12,13 +12,13 @@ const bodyParser = require('body-parser');
 
 const _dirname = '../dist';
 
-app.use(express.static(_dirname));
+app.use('/rooms/:id', express.static(_dirname));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/api/Calendar', (req, res) => {
-  return queryResByListing(22475432)
+app.get('/api/Calendar/:id', (req, res) => {
+  return queryResByListing(req.params.id)
     .then((data) => {
       res.send(formatAllRes(data));
     })
@@ -27,8 +27,9 @@ app.get('/api/Calendar', (req, res) => {
       res.sendStatus(404);
     })
 });
-app.get('/api/Booking', (req, res) => {
-  return queryListingsById(22475432)
+
+app.get('/api/Bookings/:id', (req, res) => {
+  return queryListingsById(req.params.id)
     .then((data) => {
       res.send((data));
     })

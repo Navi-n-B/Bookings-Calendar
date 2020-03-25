@@ -5,8 +5,6 @@ const moment = require('moment');
 const Sequelize = require('sequelize');
 var Promise = require('bluebird');
 
-// Listings.sync({force: true});
-
 
 var popularityRates = { 1: 0.2, 2: 0.3, 3: 0.5, 4: 0.6};
 var bookedDays = { 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 2, 8: 3, 9: 3, 10: 3, 11: 4, 12: 4, 13: 4, 14: 5, 15: 5, 16: 5, 17: 6, 18: 6, 19: 7};
@@ -75,9 +73,6 @@ var seedReservations = function(id, callback) {
 var seedTableRes = function(array) {
   // console.log('this ran too');
   Reservations.bulkCreate(array)
-    .then(() => {
-      console.log('success!')
-    })
     .catch(() => {
       console.log('something is fucky')
     })
@@ -85,16 +80,15 @@ var seedTableRes = function(array) {
 
 // console.log(typeof Reservations);
 
-// seedReservations(example_ids[8], seedTableRes);
 
 // console.log(example_ids[0]);
 
 var seedListings = function(id, callback) {
   var listings_id = id;
   var host_id =  Math.floor(Math.random() * 500000);
-  var guestSize = Math.round(Math.random() * 12);
+  var guestSize = Math.round(Math.random() * (12 - 1) + 1);
   var price = Math.floor(Math.random() * (200 - 60) + 60);
-  var minimumStay = Math.floor(Math.random() * (2 - 1) + 1);
+  var minimumStay = Math.round(Math.random() * (2 - 1) + 1);
   var refund = Math.round(Math.random())
   var Listing = {};
   var output = [];
@@ -108,7 +102,7 @@ var seedListings = function(id, callback) {
 
   output.push(Listing);
 
-  console.log(Listing);
+  // console.log(Listing);
   callback(Listing);
   // return output;
 
@@ -116,13 +110,34 @@ var seedListings = function(id, callback) {
 
 var seedTableList = function(obj) {
   // console.log('this ran too');
-  Listings.update(obj)
-    .then(() => {
-      console.log('success!')
-    })
+  Listings.create(obj)
     .catch(() => {
       console.log('something is fucky')
     })
 };
 
-seedListings(example_ids[2], seedTableList);
+
+var seedPrimaryData = function(id) {
+  seedReservations(id, seedTableRes);
+  seedListings(id, seedTableList);
+}
+
+// seedPrimaryData(example_ids[11]);
+
+var seedAll = function(i) {
+  var id = example_ids[i];
+  if (id) {
+    seedPrimaryData(id);
+    seedAll(i + 1);
+  }
+  return;
+}
+
+
+Listings.sync({force: true})
+  .then(() => {
+    Reservations.sync({force: true})
+      .then(() => {
+        seedAll(0);
+      })
+  })
