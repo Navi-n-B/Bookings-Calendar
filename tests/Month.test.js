@@ -13,7 +13,7 @@ import Month from '../client/src/components/Month';
 // define test
 test('Month loads a snapshot', () => {
   const component = renderer.create(
-    <Month month={'June'} />
+    <Month date={'06/20/2020'} />
   );
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();

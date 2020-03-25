@@ -7,34 +7,49 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reservations: []
+      reservations: [],
+      listing: {}
     };
-
+    this.id = location.pathname.split('rooms/')[1];
   }
 
-  componentWillMount() {
-    this.getRoomData();
+  componentDidMount() {
+    this.getReservations();
+    // this.getListingInfo();
   }
 
   componentDidUpdate(prevState) {
-    // this.getRoomData();
-    console.log(prevState)
-    console.log(this.state.reservations)
     if (this.state.reservations !== prevState.reservations) {
       this.render();
     }
   }
 
-  getRoomData() {
+  getReservations() {
     $.ajax({
       method: 'GET',
-      url: '/api'})
+      url: `/api/Calendar/${this.id}`})
       .done((data) => {
         if (data) {
           this.setState({
             reservations: data
           });
-          console.log(data);
+          // console.log(data);
+        } else {
+          console.log('error retrieving data');
+        }
+      })
+  }
+
+  getListingInfo() {
+    $.ajax({
+      method: 'GET',
+      url: `/api/Bookings/${this.id}`})
+      .done((data) => {
+        if (data) {
+          this.setState({
+            listing: data[0]
+          });
+          // console.log(data);
         } else {
           console.log('error retrieving data');
         }
@@ -46,8 +61,7 @@ class App extends React.Component {
     return (
       <div>
         <Calendar reservations={this.state.reservations}/>
-        <Bookings />
-        <button onClick={this.getRoomData.bind(this)}>TEST</button>
+        {/* <Bookings listing={this.state.listing} reservations={this.state.reservations}/> */}
       </div>
     )
   }

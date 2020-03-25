@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const port = 6660;
 const Reservations = require('./database/index.js').Reservations;
-const { queryResByListing } = require('./database/db.helpers.js');
+const Listings = require('./database/index.js').Listings;
+const { queryResByListing, queryListingsById } = require('./database/db.helpers.js');
 const { formatAllRes } = require('./helpers.js');
 var Promise = require('bluebird');
 const Sequelize = require('sequelize');
@@ -11,13 +12,13 @@ const bodyParser = require('body-parser');
 
 const _dirname = '../dist';
 
-app.use(express.static(_dirname));
+app.use('/rooms/:id', express.static(_dirname));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/api', (req, res) => {
-  return queryResByListing(11710116)
+app.get('/api/Calendar/:id', (req, res) => {
+  return queryResByListing(req.params.id)
     .then((data) => {
       res.send(formatAllRes(data));
     })
@@ -25,7 +26,17 @@ app.get('/api', (req, res) => {
       console.log('your queries suck');
       res.sendStatus(404);
     })
+});
 
+app.get('/api/Bookings/:id', (req, res) => {
+  return queryListingsById(req.params.id)
+    .then((data) => {
+      res.send((data));
+    })
+    .catch(() => {
+      console.log('your queries suck');
+      res.sendStatus(404);
+    })
 });
 
 // app.post('/', (req, res) => {
