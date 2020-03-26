@@ -3,7 +3,7 @@ import Bookings from './Bookings.jsx';
 import Calendar from './Calendar.jsx';
 import $ from 'jquery';
 
-class App extends React.Component {
+class AppCalendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +27,7 @@ class App extends React.Component {
   getReservations() {
     $.ajax({
       method: 'GET',
-      url: `/api/Calendar/${this.id}`})
+      url: `http://localhost:6660/api/Calendar/${this.id}`})
       .done((data) => {
         if (data) {
           this.setState({
@@ -67,4 +67,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default AppCalendar;

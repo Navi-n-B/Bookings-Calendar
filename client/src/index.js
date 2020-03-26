@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import App from './components/App.jsx';
+import AppCalendar from './components/App.jsx';
 
 
 
 ReactDOM.render(
-  <App />,
+  <AppCalendar />,
   document.getElementById('Calendar')
 );
