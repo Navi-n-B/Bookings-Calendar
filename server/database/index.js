@@ -1,11 +1,15 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('navi', 'root', '', {
+
+const database = 'navi';
+
+const sequelize = new Sequelize(database, 'root', '', {
   host: 'localhost',
   dialect: 'mariadb',
   dialectOptions: {
     timezone: 'Etc/GMT-3'
   }
 });
+
 
 const Model = Sequelize.Model;
 class Listings extends Model {};
