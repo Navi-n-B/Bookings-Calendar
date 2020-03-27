@@ -21,14 +21,14 @@ class Month extends React.Component {
       maxPossibleEnd: null,
       selection: false,
       initialzed: false,
-      month: moment(this.props.date).format('MMMM'),
-      year: moment(this.props.date).format('YYYY')
+      selectionRange: []
     };
 
     this.month = moment(this.props.date).format('MMMM');
     this.clickHandler = this.clickHandler.bind(this);
     this.clearSelected = this.clearSelected.bind(this);
     this.linkStyle = {hidden: this.state.selection};
+    this.toggleSelectableDates = this.toggleSelectableDates.bind(this);
   }
 
   // need to pivot to a 2 month render to handle reservations spanning different months
@@ -41,13 +41,6 @@ class Month extends React.Component {
       this.generateDays();
     }
     if (this.props.date !== prevProps.date) {
-      var month = moment(this.props.date).format('MMMM');
-      var year = moment(this.props.date).format('YYYY');
-
-      this.setState({
-        month: month,
-        year: year
-      })
       this.generateDays();
     }
    }
@@ -100,13 +93,16 @@ class Month extends React.Component {
   }
 
   generateDateObject(D) {
-    var M = this.props.month;
-    var Y = this.state.year;
-    var dateString = `${M} ${D} ${Y}`;
+    var M = moment(this.props.date).format('MMMM');
+    var Y = moment(this.props.date).format('YYYY');
+    var dateString = `${Y}-${M}-${D}`;
     if (moment(dateString).isBefore(Date.now())) {
       return { date: D, availability: 0 , class: `${M}-${D}-${Y} date-unavail`};
     }
-    if (!this.props.reservations || this.props.reservations === 0 || !this.props.reservations[Y]) {
+    if (this.props.reservations[Y] === undefined || this.props.reservations[Y][M] === undefined) {
+      return { date: D, availability: 1, class: `${M}-${D}-${Y} date-avail`};
+    }
+    if (!this.props.reservations || this.props.reservations === 0) {
       return { date: D, availability: 1, class: `${M}-${D}-${Y} date-avail`};
     }
     if (this.props.reservations[Y][M]) {
@@ -128,8 +124,8 @@ class Month extends React.Component {
     var end = this.state.selectedEnd;
     var dates = this.state.days;
     var className;
-    var month = this.state.month;
-    var year = this.state.year;
+    var month = moment(this.props.date).format('MMMM');
+    var year = moment(this.props.date).format('YYYY');
 
     if (this.props.selectedRes.length > 1) {
       for (var i = 0; i < dates.length; i++) {
@@ -170,7 +166,22 @@ class Month extends React.Component {
     if (e.target.className.includes('date-avail')) {
       var date = e.target.className.split(' ')[0];
 
-      if (this.state.selectedStart === null) {
+      if (this.state.selectedStart === date) {
+        var $target = $(`.${date}`);
+        $target.removeClass('cal-sel');
+        this.setState({
+          selectedStart: null,
+          selectedEnd: null,
+          selectedRes: [],
+          selection: false,
+          selectionRange: []
+        });
+        this.untoggleSelectableDates();
+        return;
+      }
+
+      if (this.state.selectedStart === null && this.state.selectedEnd === null) {
+        // console.log('first condition');
         if (this.checkAdjacent(date)) {
           var resDates = this.state.selectedRes;
           resDates[0] = date;
@@ -181,12 +192,14 @@ class Month extends React.Component {
           });
 
           $target.addClass('cal-sel');
-          this.calculateMaxDate(date, this.toggleSelectableDates.bind(this));
+          this.calculateMaxDate(date, this.toggleSelectableDates);
           this.wasClicked();
+          // this.untoggleAvailableDates();
         }
       }
 
       if (this.state.selectedStart  && this.state.selectedEnd === null) {
+        // console.log('second condition');
         if (moment(this.state.selectedStart).isBefore(date)) {
           var resDates = this.state.selectedRes;
           resDates[1] = date;
@@ -197,11 +210,13 @@ class Month extends React.Component {
           });
 
           this.wasClicked();
+          this.toggleAvailableDates(this.state.selectedStart, date);
         }
       }
 
       if (this.state.selectedStart && this.state.selectedEnd) {
         if (moment(date).isBefore(this.state.selectedStart)) {
+          // console.log('third condition');
           var resDates = this.state.selectedRes;
           resDates[0] = date;
           var $target = $(`.${date}`);
@@ -211,9 +226,11 @@ class Month extends React.Component {
           });
 
           this.wasClicked();
+          // this.untoggleAvailableDates();
         }
 
         if (moment(date).isBetween(this.state.selectedStart, this.state.selectedEnd)) {
+          // console.log('fourth condition');
           var resDates = this.state.selectedRes;
           resDates[1] = date;
           var $target = $(`.${date}`);
@@ -226,6 +243,7 @@ class Month extends React.Component {
         }
 
         if (moment(this.state.selectedEnd).isBefore(date)) {
+          // console.log('fifth condition');
           var resDates = this.state.selectedRes;
           resDates[1] = date;
           var $target = $(`.${date}`);
@@ -235,6 +253,7 @@ class Month extends React.Component {
           });
 
           this.wasClicked();
+          // this.untoggleAvailableDates();
         }
       }
 
@@ -251,7 +270,7 @@ class Month extends React.Component {
     for (var i = 0; i < dates.length; i++) {
       if (!dates[i].class.includes('date-empty')) {
         if (dates[i].date < day) {
-          dates[i].class.replace('date-avail', 'date-unavail');
+          dates[i].class = dates[i].class.replace('date-avail', 'date-unavail');
         }
         if (dates[i].class.includes('date-unavail')) {
           break;
@@ -264,12 +283,13 @@ class Month extends React.Component {
     this.setState({
       maxPossibleEnd: max
     });
-
-    callback(day, max);
+    // console.log(input, max);
+    callback(input, max);
   }
 
   toggleSelectableDates(min, max) {
     var min, max, temp;
+    min = min.split('-')[1];
     var dates = Array.from(this.state.days);
     if (max) {
       max = max.split('-')[1];
@@ -281,9 +301,10 @@ class Month extends React.Component {
         }
       }
 
-      this.setState({
-        days: dates
-      })
+      // this.setState({
+      //   days: dates
+      // })
+      this.parseRows(dates);
     }
   }
 
@@ -330,6 +351,77 @@ class Month extends React.Component {
     } else {
       return false;
     }
+  }
+
+  untoggleAvailableDates() {
+    // console.log('untoggleAvailableDates ran')
+    var dates = this.state.days;
+    for (var i = 0; i < dates.length; i++) {
+      if (dates[i].availability === 1) {
+        if (dates[i].class.includes('date-unavail')) {
+          // console.log(dates[i].class)
+          dates[i].class = dates[i].class.replace('date-unavail', 'date-avail');
+          // console.log(dates[i].class)
+        }
+      }
+    }
+
+    // this.setState({
+    //   days: dates
+    // })
+    this.parseRows(dates);
+  }
+
+  toggleAvailableDates(start, end) {
+    var dates = this.state.days;
+    var min, max, startIndex, endIndex, range;
+    var startBreak = false;
+    var endBreak = false;
+
+    for (var i = 0; i < dates.length; i++) {
+      if (dates[i].class.includes(start)) {
+        startIndex = i;
+      }
+      if (dates[i].class.includes(end)) {
+        endIndex = i;
+      }
+    }
+
+    // console.log(startIndex, endIndex)
+
+    for (var j = startIndex; j >= 0; j--) {
+      if (startBreak) {
+        break;
+      }
+      if (dates[j].class.includes('date-unavail')) {
+        startBreak = true;
+      }
+      if (dates[j].class.includes('date-avail')) {
+        min = dates[j].class.split(' ')[0];
+      }
+    }
+
+    for (var k = endIndex; k < dates.length; k++) {
+      if (endBreak) {
+        break;
+      }
+      if (dates[k].class.includes('date-unavail')) {
+        endBreak = true;
+      }
+      if (dates[k].class.includes('date-avail')) {
+        max = dates[k].class.split(' ')[0];
+      }
+
+    }
+
+    range = [min, max];
+    // console.log(range);
+    this.setState({
+      selectionRange: [min, max]
+    })
+
+    this.toggleSelectableDates(min, max);
+
   }
 
   wasClicked() {

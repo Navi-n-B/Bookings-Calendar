@@ -35,7 +35,7 @@ var formatAllRes = function(data) {
 
     if (monthStart === monthEnd) {
       for (var j = startDate; j < endDate; j++) {
-        output[yearStart][monthStart][l] = true;
+        output[yearStart][monthStart][j] = true;
       }
     }
 

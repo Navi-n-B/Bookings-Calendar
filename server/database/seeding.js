@@ -7,7 +7,7 @@ var Promise = require('bluebird');
 
 
 var popularityRates = { 1: 0.2, 2: 0.3, 3: 0.5, 4: 0.6};
-var bookedDays = { 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 2, 8: 3, 9: 3, 10: 3, 11: 4, 12: 4, 13: 4, 14: 5, 15: 5, 16: 5, 17: 6, 18: 6, 19: 7};
+var bookedDays = { 1: 2, 2: 2, 3: 2, 4: 3, 5: 3, 6: 3, 7: 3, 8: 4, 9: 4, 10: 4, 11: 5, 12: 5, 13: 5, 14: 6, 15: 6, 16: 6, 17: 7, 18: 7, 19: 8};
 // var count = 0;
 
 var seedReservations = function(id, callback) {
@@ -60,7 +60,7 @@ var seedReservations = function(id, callback) {
       date1 = moment(date2);
 
     } else {
-      date1 = moment(date1).add(1, 'days');
+      date1 = moment(date1).add(2, 'days');
     }
   };
 
