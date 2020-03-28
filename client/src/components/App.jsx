@@ -43,7 +43,7 @@ class AppCalendar extends React.Component {
   getListingInfo() {
     $.ajax({
       method: 'GET',
-      url: `/api/Bookings/${this.id}`})
+      url: `http://localhost:6660/api/Bookings/${this.id}`})
       .done((data) => {
         if (data) {
           this.setState({
