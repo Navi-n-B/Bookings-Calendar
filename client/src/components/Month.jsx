@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import example from '../example.js';
 import $ from 'jquery';
 
 class Month extends React.Component {
@@ -102,7 +101,7 @@ class Month extends React.Component {
     if (this.props.reservations[Y] === undefined || this.props.reservations[Y][M] === undefined) {
       return { date: D, availability: 1, class: `${M}-${D}-${Y} date-avail`};
     }
-    if (!this.props.reservations || this.props.reservations === 0) {
+    if (this.props.reservations.length === 0) {
       return { date: D, availability: 1, class: `${M}-${D}-${Y} date-avail`};
     }
     if (this.props.reservations[Y][M]) {

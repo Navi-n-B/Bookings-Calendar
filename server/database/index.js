@@ -36,6 +36,12 @@ Listings.init({
   minimum_stay: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  discount_week: {
+    type: Sequelize.INTEGER
+  },
+  discount_month: {
+    type: Sequelize.INTEGER
   }
 }, {
   sequelize,

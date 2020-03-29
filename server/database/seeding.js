@@ -90,15 +90,20 @@ var seedListings = function(id, callback) {
   var price = Math.floor(Math.random() * (200 - 60) + 60);
   var minimumStay = Math.round(Math.random() * (2 - 1) + 1);
   var refund = Math.round(Math.random())
+  var discounts = [null, null, null, 5, 10, 15, 20];
+  var discount_week = discounts[Math.round(Math.random() * 6)];
+  var discount_month = discounts[Math.round(Math.random() * 6)];
   var Listing = {};
   var output = [];
 
   Listing.id = id;
-  Listing.host_id= host_id;
-  Listing.guest_size= guestSize;
-  Listing.price= price;
-  Listing.refund= refund;
-  Listing.minimum_stay= minimumStay;
+  Listing.host_id = host_id;
+  Listing.guest_size = guestSize;
+  Listing.price = price;
+  Listing.refund = refund;
+  Listing.minimum_stay = minimumStay;
+  Listing.discount_week = discount_week;
+  Listing.discount_month = discount_month;
 
   output.push(Listing);
 
