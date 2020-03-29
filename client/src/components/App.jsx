@@ -1,6 +1,7 @@
 import React from 'react';
 import Bookings from './Bookings.jsx';
 import Calendar from './Calendar.jsx';
+import axios from 'axios';
 import $ from 'jquery';
 
 class AppCalendar extends React.Component {
@@ -25,35 +26,28 @@ class AppCalendar extends React.Component {
   }
 
   getReservations() {
-    $.ajax({
-      method: 'GET',
-      url: `http://localhost:3003/api/Calendar/${this.id}`})
-      .done((data) => {
-        if (data) {
-          this.setState({
-            reservations: data
-          });
-          // console.log(data);
-        } else {
-          console.log('error retrieving data');
-        }
+    axios.get(`/api/Calendar/${this.id}`)
+      .then((response) => {
+        this.setState({
+          reservations: response.data
+        });
+        // console.log(response.data);
       })
+      .catch(() => {
+        console.log('error retrieving Reservation data');
+      });
   }
 
   getListingInfo() {
-    $.ajax({
-      method: 'GET',
-      url: `http://localhost:3003/api/Bookings/${this.id}`})
-      .done((data) => {
-        if (data) {
-          this.setState({
-            listing: data[0]
-          });
-          // console.log(data);
-        } else {
-          console.log('error retrieving data');
-        }
+    axios.get(`/api/Bookings/${this.id}`)
+      .then((response) => {
+        this.setState({
+          listing: response.data
+        });
       })
+      .catch(() => {
+        console.log('error retrieving Listing data');
+      });
   }
 
 
