@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 6660;
+const port = 3003;
 const cors = require('cors');
 const Reservations = require('./database/index.js').Reservations;
 const Listings = require('./database/index.js').Listings;
