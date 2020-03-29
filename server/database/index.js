@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const database = 'navi';
 
-const sequelize = new Sequelize(database, 'root', '', {
+const sequelize = new Sequelize(database, 'admin44', '', {
   host: 'localhost',
   dialect: 'mariadb',
   dialectOptions: {
