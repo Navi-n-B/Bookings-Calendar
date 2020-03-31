@@ -22,20 +22,15 @@ class Bookings extends React.Component {
     return (
       <div className='bookings'>
         <div className='bookings-cont'>
-          <div className='bookings-price'>$ {this.state.price} per night</div>
           <div className='bookings-reviews'></div>
-          <span>Dates</span>
           <div className='bookings-dates'>
             <input id='checkin'></input>
             <input id='checkout'></input>
           </div>
-          <span>Guests</span>
           <div className='bookings-guests'>
             <input id='guests'></input>
           </div>
-            <button className='submit-reservation'>Reserve</button>
         </div>
-        <span>Report this listing</span>
       </div>
     )
   }
