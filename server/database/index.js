@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const database = 'navi';
+const database = 'NaviCal';
 
 const sequelize = new Sequelize(database, 'root', '', {
   host: 'localhost',
