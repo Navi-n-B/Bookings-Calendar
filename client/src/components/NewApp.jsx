@@ -9,9 +9,11 @@ class AppCalendar extends React.Component {
     this.state = {
       reservations: [],
       listing: {},
-      discounts: [null, null]
+      discounts: [null, null],
+      selection: []
     };
     this.id = location.pathname.split('rooms/')[1];
+    this.updateSelection = this.updateSelection.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +31,7 @@ class AppCalendar extends React.Component {
   }
 
   getReservations() {
-    axios.get(`/api/Calendar/${this.id}`)
+    axios.get(`http://localhost:3003/api/Calendar/${this.id}`)
       .then((response) => {
         this.setState({
           reservations: response.data
@@ -42,7 +44,7 @@ class AppCalendar extends React.Component {
   }
 
   getListingInfo() {
-    axios.get(`/api/Bookings/${this.id}`)
+    axios.get(`http://localhost:3003/api/Bookings/${this.id}`)
       .then((response) => {
         var discounts = [response.data[0].discount_week, response.data[0].discount_month]
         this.setState({
@@ -54,6 +56,12 @@ class AppCalendar extends React.Component {
       .catch(() => {
         console.log('error retrieving Listing data');
       });
+  }
+
+  updateSelection(selection) {
+    this.setState({
+      selection: selection
+    });
   }
 
 
@@ -68,7 +76,7 @@ class AppCalendar extends React.Component {
             {(this.state.discounts[0] && this.state.discounts[1]) ? `This host offers ${this.state.discounts[0]}% off if you stay a week and a ${this.state.discounts[1]}% monthly discount.` : ''}
             </span>
         </div>
-        <SelectContainer reservations={this.state.reservations} listing={this.state.listing}/>
+        <SelectContainer reservations={this.state.reservations} listing={this.state.listing} selection={this.selection}/>
         {/* <Bookings listing={this.state.listing}/> */}
       </div>
     )

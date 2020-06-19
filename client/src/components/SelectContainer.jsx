@@ -76,15 +76,17 @@ class SelectContainer extends React.Component {
           <div className='cal-headers'>
             <div className='cal-tableheader-prev'>
               <button className='cal-current-month' onClick={this.previousMonths}>&#60;</button>
-              <strong className='month-header-current'>{moment(this.state.dateL1).format('MMMM')}</strong>
+              <strong className='month-header-current'>{moment(this.state.dateL1).format('MMMM YYYY')}</strong>
+              <button className='cal-current-month' onClick={this.previousMonths} style={{'visibility': 'hidden'}}>&#60;</button>
             </div>
             <div className='cal-tableheader-next'>
-              <strong className='month-header-next'>{moment(this.state.dateR1).format('MMMM')}</strong>
+              <button className='cal-next-month' onClick={this.nextMonths} style={{'visibility': 'hidden'}}>&#62;</button>
+              <strong className='month-header-next'>{moment(this.state.dateR1).format('MMMM YYYY')}</strong>
               <button className='cal-next-month' onClick={this.nextMonths}>&#62;</button>
             </div>
           </div>
           <div className='cal-dual'>
-            <SelectDates  current={this.state.dateL1} next={this.state.dateR1} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} listing={this.props.listing}/>
+            <SelectDates  current={this.state.dateL1} next={this.state.dateR1} reservations={this.props.reservations} selectedRes={this.state.selectedRes}  handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} listing={this.props.listing} selection={this.props.selection}/>
           </div>
         </div>
       </div>

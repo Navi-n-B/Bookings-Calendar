@@ -11,7 +11,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 const bodyParser = require('body-parser');
 
-const _dirname = '../dist';
+const _dirname = './dist';
 
 app.use(cors());
 app.use('/rooms/:id', express.static(_dirname));
